@@ -1,68 +1,81 @@
 import streamlit as st
 import requests
 
-"""
-# Zoologist front
-"""
-
 URL = st.secrets['API_URL']
 
-st.markdown(
-    """
-Remember that there are several ways to output content into your web page...
-
-Either like the title above by just creating a string (or an f-string) starting. Or like this paragraph using the `st.` function.
 """
+# 🌟 Penguins species prediction 🌟
+"""
+
+st.image(
+    "palmer-penguins.png",
+    #caption="Penguin classification",
+    alt="Penguin",
 )
 
-"""
-## Here we would like to add some controllers in order to ask the user to input the characteristics of the penguin. We need to know all the inputs required by our model to make a prediction.
+# st.markdown(
+#     """
+# Remember that there are several ways to output content into your web page...
 
-1. Let's ask for:
-- island (the location where the penguin lives: Biscoe, Dream or Torgersen)
-- bill length (in mm)
-- bill depth (in mm)
-- flipper length (in mm)
-- body mass (in g)
-- sex ("Male" or "Female")
-"""
+# Either like the title above by just creating a string (or an f-string) starting. Or like this paragraph using the `st.` function.
+# """
+# )
 
-"""
-## Once we have these, let's call our API in order to retrieve a prediction
+# """
+# ## Here we would like to add some controllers in order to ask the user to input the characteristics of the penguin. We need to know all the inputs required by our model to make a prediction.
 
-See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
+# 1. Let's ask for:
+# - island (the location where the penguin lives: Biscoe, Dream or Torgersen)
+# - bill length (in mm)
+# - bill depth (in mm)
+# - flipper length (in mm)
+# - body mass (in g)
+# - sex ("Male" or "Female")
+# """
 
-🤔 How could we call our API ? Of course... The `requests` package 💡
+# """
+# ## Once we have these, let's call our API in order to retrieve a prediction
 
-What are the steps to follow in order to call an API ?
+# See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
 
-1. Which url will you use? Save it in a variable so you can easily change it later...
+# 🤔 How could we call our API ? Of course... The `requests` package 💡
 
-2. Let's build a dictionary containing the parameters for our API...
+# What are the steps to follow in order to call an API ?
 
-3. Let's call our API using the `requests` package...
+# 1. Which url will you use? Save it in a variable so you can easily change it later...
 
-4. Let's retrieve the prediction from the **JSON** returned by the API...
+# 2. Let's build a dictionary containing the parameters for our API...
 
-## Finally, we can display the prediction to the user
-"""
+# 3. Let's call our API using the `requests` package...
+
+# 4. Let's retrieve the prediction from the **JSON** returned by the API...
+
+# ## Finally, we can display the prediction to the user
+# """
 
 # Input parameters (controled by user)
 ## Island
-island = st.selectbox('Select an island', ['Dream', 'Torgersen', 'Biscoe'])
-st.markdown(
-    """The island you chose:"""
-)
-st.write(island)
+island = st.selectbox('Select an island 🏝️', ['Dream', 'Torgersen', 'Biscoe'])
+# st.markdown(
+#     """The island you chose:"""
+# )
+# st.write(island)
 
 ## Bill_length, bill_depth, flipper_length, body_mass
-bill_length_mm = st.slider('Select a bill length (in mm)', min_value = 30, max_value = 100, step = 3)
-bill_depth_mm = st.slider('Select a bill depth (in mm)', min_value = 10, max_value = 50, step = 2)
-flipper_length_mm = st.slider('Select a flipper length (in mm)', min_value = 150, max_value = 300, step = 5)
-body_mass_g = st.slider('Select a body mass (in g)', min_value = 3500, max_value = 4500, step = 50)
+bill_length_mm = st.slider('Select a bill length (in mm) 👃📏', min_value = 30, max_value = 100, step = 3)
+bill_depth_mm = st.slider('Select a bill depth (in mm) 👃🕳️', min_value = 10, max_value = 50, step = 2)
+flipper_length_mm = st.slider('Select a flipper length (in mm) 🪽📏', min_value = 150, max_value = 300, step = 5)
+body_mass_g = st.slider('Select a body mass (in g) ⚖️', min_value = 3500, max_value = 4500, step = 50)
 
 ## Sex
-sex = st.radio('Select a sex', ('Male', 'Female'))
+sex = st.radio('Select a sex 🚹🚺', ('Male', 'Female'))
+
+st.image(
+    "gentoo.png",
+    #caption="Penguin classification",
+    alt="help-input-params",
+    width = 650
+)
 
 penguins_dict = {
     'island' : island,
@@ -82,6 +95,6 @@ if st.button("Predict species"): # On créé un bouton que l'utilisateur doit ac
     if response.status_code == 200:
         species = response.json()['species']
         proba = round(response.json()['probability'],4)
-        st.success(f"Success! Predicted species: **{species}** with a probability of {proba} 🐧")
+        st.success(f"🕵️‍♀️ I think it is .... **{species}** ! But I'm only {proba}% sure 🐧")
     else:
         st.error(f"API error: {response.status_code} - {response.text}")
