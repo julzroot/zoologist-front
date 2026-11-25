@@ -1,10 +1,11 @@
 import streamlit as st
+import requests
 
 """
 # Zoologist front
 """
 
-URL = 'http://localhost:8501/'
+URL = "http://127.0.0.1:8000/predict"
 
 st.markdown(
     """
@@ -46,16 +47,7 @@ What are the steps to follow in order to call an API ?
 ## Finally, we can display the prediction to the user
 """
 
-# penguins_dict = {
-#     'island' : island,
-#     'bill_length_mm' : bill_length_mm,
-#     'bill_depth_mm' : bill_depth_mm,
-#     'flipper_length_mm' : flipper_length_mm,
-#     'body_mass_g' : body_mass_g,
-#     'sex' : sex
-# }
-
-# Selection of input parameters
+# Input parameters (controled by user)
 ## Island
 island = st.selectbox('Select an island', ['Dream', 'Torgersen', 'Biscoe'])
 st.markdown(
@@ -67,7 +59,28 @@ st.write(island)
 bill_length_mm = st.slider('Select a bill length (in mm)', min_value = 30, max_value = 100, step = 3)
 bill_depth_mm = st.slider('Select a bill depth (in mm)', min_value = 10, max_value = 50, step = 2)
 flipper_length_mm = st.slider('Select a flipper length (in mm)', min_value = 150, max_value = 300, step = 5)
-body_mass_kg = st.slider('Select a body mass (in g)', min_value = 3500, max_value = 4500, step = 50)
+body_mass_g = st.slider('Select a body mass (in g)', min_value = 3500, max_value = 4500, step = 50)
 
 ## Sex
 sex = st.radio('Select a sex', ('Male', 'Female'))
+
+penguins_dict = {
+    'island' : island,
+    'bill_length_mm' : bill_length_mm,
+    'bill_depth_mm' : bill_depth_mm,
+    'flipper_length_mm' : flipper_length_mm,
+    'body_mass_g' : body_mass_g,
+    'sex' : sex
+}
+
+# API request
+
+if st.button("Predict species"): # On créé un bouton que l'utilisateur doit activer pour déclencher la préd
+    # Autrement a chaque mouvement de slider, ca envoie une requete à l'app pour refaire une prédiction
+    response = requests.get(URL, params=penguins_dict)
+
+    if response.status_code == 200:
+        prediction = response.json()['prediction']
+        st.success(f"Success! Predicted species: **{prediction}**")
+    else:
+        st.error(f"API error: {response.status_code} - {response.text}")
