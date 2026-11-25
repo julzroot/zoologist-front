@@ -5,7 +5,7 @@ import requests
 # Zoologist front
 """
 
-URL = "http://127.0.0.1:8000/predict"
+URL = st.secrets['API_URL']
 
 st.markdown(
     """
