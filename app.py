@@ -62,10 +62,10 @@ island = st.selectbox('Select an island 🏝️', ['Dream', 'Torgersen', 'Biscoe
 # st.write(island)
 
 ## Bill_length, bill_depth, flipper_length, body_mass
-bill_length_mm = st.slider('Select a bill length (in mm) 👃📏', min_value = 30, max_value = 100, step = 3)
-bill_depth_mm = st.slider('Select a bill depth (in mm) 👃🕳️', min_value = 10, max_value = 50, step = 2)
-flipper_length_mm = st.slider('Select a flipper length (in mm) 🪽📏', min_value = 150, max_value = 300, step = 5)
-body_mass_g = st.slider('Select a body mass (in g) ⚖️', min_value = 3500, max_value = 4500, step = 50)
+bill_length_mm = st.slider('Select a bill length (in mm) 👃📏', min_value = 30.0, max_value = 65.0, step = 0.1)
+bill_depth_mm = st.slider('Select a bill depth (in mm) 👃🕳️', min_value = 10.0, max_value = 25.0, step = 0.1)
+flipper_length_mm = st.slider('Select a flipper length (in mm) 🪽📏', min_value = 160.0, max_value = 250.0, step = 0.1)
+body_mass_g = st.slider('Select a body mass (in g) ⚖️', min_value = 2500, max_value = 6500, step = 1)
 
 ## Sex
 sex = st.radio('Select a sex 🚹🚺', ('Male', 'Female'))
