@@ -94,7 +94,7 @@ if st.button("Predict species"): # On créé un bouton que l'utilisateur doit ac
 
     if response.status_code == 200:
         species = response.json()['species']
-        proba = round(response.json()['probability'],4)
+        proba = round(response.json()['probability']*100,3)
         st.success(f"🕵️‍♀️ I think it is .... **{species}** ! But I'm only {proba}% sure 🐧")
     else:
         st.error(f"API error: {response.status_code} - {response.text}")
