@@ -80,7 +80,8 @@ if st.button("Predict species"): # On créé un bouton que l'utilisateur doit ac
     response = requests.get(URL, params=penguins_dict)
 
     if response.status_code == 200:
-        prediction = response.json()['prediction']
-        st.success(f"Success! Predicted species: **{prediction}**")
+        species = response.json()['species']
+        proba = round(response.json()['probability'],4)
+        st.success(f"Success! Predicted species: **{species}** with a probability of {proba} 🐧")
     else:
         st.error(f"API error: {response.status_code} - {response.text}")
